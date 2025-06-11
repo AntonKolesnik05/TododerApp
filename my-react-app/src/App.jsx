@@ -8,6 +8,7 @@ function TodoApp() {
   });
 
   const [inputValue, setInputValue] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -32,9 +33,28 @@ function TodoApp() {
     setTasks(prev => prev.filter(task => task.id !== id));
   };
 
+  const fetchTodos = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5');
+      const data = await response.json();
+      const newTodos = data.map(todo => ({
+        id: todo.id + 1000000,
+        text: todo.title,
+        done: todo.completed,
+      }));
+      setTasks(prev => [...prev, ...newTodos]);
+    } catch (error) {
+      console.error('Помилка при отриманні тудушок:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="todo-app">
       <h1>Tododer List</h1>
+
       <div className="input-group">
         <input
           type="text"
@@ -44,6 +64,9 @@ function TodoApp() {
           onKeyDown={e => e.key === 'Enter' && addTask()}
         />
         <button onClick={addTask}>Додати</button>
+        <button onClick={fetchTodos} disabled={loading}>
+          {loading ? 'Завантаження...' : 'Fetch Todos'}
+        </button>
       </div>
 
       <ul className="task-list">
