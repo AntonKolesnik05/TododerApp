@@ -1,29 +1,49 @@
-body, html {
-  height: 100%;
+body {
   margin: 0;
+  padding: 0;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-color: #f0f2f5;
+  padding-top: 60px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light {
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #eee;
 }
 
 .todo-app {
+  margin: 40px auto;
   padding: 20px 30px;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  border-radius: 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 600px;
+  background-color: #fff;
   color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark .todo-app {
+  background-color: #1e1e1e;
+  color: #eee;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .todo-app h1 {
   text-align: center;
   margin-bottom: 20px;
-  color: #2c3e50;
+  margin-top: 0px;
+  color: inherit;
 }
 
-/* Група вводу */
 .input-group {
   display: flex;
   gap: 10px;
@@ -34,9 +54,11 @@ body, html {
   flex-grow: 1;
   padding: 10px 15px;
   font-size: 16px;
-  border: 2px solid #ddd;
+  border: 2px solid #ccc;
   border-radius: 6px;
-  transition: border-color 0.3s ease;
+  background-color: inherit;
+  color: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .input-group input[type="text"]:focus {
@@ -60,7 +82,26 @@ body, html {
   background-color: #2980b9;
 }
 
-/* Список завдань */
+.theme-toggle {
+  background-color: #888888; /* нейтральний сірий фон */
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: inherit;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  border-radius: 6px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.2);
+  background-color: #aaa; /* світліший сірий при ховері */
+}
+
 .task-list {
   list-style: none;
   padding: 0;
@@ -72,13 +113,22 @@ body, html {
   align-items: center;
   justify-content: space-between;
   padding: 12px 15px;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #ccc;
   border-radius: 6px;
+  background-color: inherit;
+  transition: background-color 0.2s ease;
+}
+
+body.dark .task-item {
+  border-bottom: 1px solid #444;
 }
 
 .task-item:hover {
-  background-color: #f9f9f9;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+body.dark .task-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .task-item label {
@@ -89,20 +139,17 @@ body, html {
   flex-grow: 1;
 }
 
-/* Позначка виконаного завдання */
 .task-item.done span {
   text-decoration: line-through;
-  color: #999;
+  color: #888;
 }
 
-/* Кастомний чекбокс */
 .task-item input[type="checkbox"] {
   width: 18px;
   height: 18px;
   cursor: pointer;
 }
 
-/* Кнопка видалення */
 .delete-btn {
   background: transparent;
   border: none;
@@ -116,4 +163,30 @@ body, html {
 
 .delete-btn:hover {
   color: #c0392b;
+}
+
+.delete-btn:focus,
+.delete-btn:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.theme-toggle-container {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 0px;
+}
+
+.header {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
 }

@@ -9,10 +9,22 @@ function TodoApp() {
 
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  useEffect(() => {
+    document.body.className = theme;
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   const addTask = () => {
     if (inputValue.trim() === '') return;
@@ -53,7 +65,23 @@ function TodoApp() {
 
   return (
     <div className="todo-app">
-      <h1>Tododer List</h1>
+      <div className="theme-toggle-container">
+        <button className="theme-toggle" onClick={toggleTheme}>
+          <img
+            src={
+              theme === 'dark'
+                ? 'https://img.icons8.com/?size=100&id=648&format=png&color=000000'
+                : 'https://img.icons8.com/?size=100&id=45475&format=png&color=000000'
+            }
+            alt={theme === 'dark' ? 'Sun icon' : 'Moon icon'}
+            style={{ width: '24px', height: '24px' }}
+          />
+        </button>
+      </div>
+
+      <div className="header">
+        <h1>Tododer List</h1>
+      </div>
 
       <div className="input-group">
         <input
