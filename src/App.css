@@ -83,7 +83,7 @@ body.dark .todo-app {
 }
 
 .theme-toggle {
-  background-color: #888888; /* нейтральний сірий фон */
+  background-color: #888888;
   border: none;
   font-size: 24px;
   cursor: pointer;
@@ -99,7 +99,7 @@ body.dark .todo-app {
 
 .theme-toggle:hover {
   transform: scale(1.2);
-  background-color: #aaa; /* світліший сірий при ховері */
+  background-color: #aaa;
 }
 
 .task-list {
@@ -190,3 +190,4 @@ body.dark .task-item:hover {
   padding-bottom: 0px;
   padding-top: 0px;
 }
+

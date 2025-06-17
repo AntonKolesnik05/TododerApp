@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import Register from './components/Register';
 
 function TodoApp() {
+  const [isRegistered, setIsRegistered] = useState(false);
+
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem('tasks');
     return saved ? JSON.parse(saved) : [];
   });
-
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [theme, setTheme] = useState(() => {
@@ -62,6 +64,14 @@ function TodoApp() {
       setLoading(false);
     }
   };
+
+  const handleRegister = () => {
+    setIsRegistered(true);
+    console.log('User registered, switching to todo');
+  };
+  if (!isRegistered) {
+    return <Register onRegister={handleRegister} />;
+  }
 
   return (
     <div className="todo-app">
