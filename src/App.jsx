@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import Register from './components/Register';
+import Login from './components/Login';
 
 function TodoApp() {
-  const [isRegistered, setIsRegistered] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [mode, setMode] = useState(null);
 
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem('tasks');
     return saved ? JSON.parse(saved) : [];
   });
+
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [theme, setTheme] = useState(() => {
@@ -65,14 +68,77 @@ function TodoApp() {
     }
   };
 
-  const handleRegister = () => {
-    setIsRegistered(true);
-    console.log('User registered, switching to todo');
+  // --- Реєстрація ---
+  const handleRegister = async (formData) => {
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        alert('Помилка реєстрації: ' + errorText);
+        return;
+      }
+      alert('Реєстрація успішна!');
+      setIsAuthenticated(true);
+      setMode(null);
+    } catch (error) {
+      alert('Помилка мережі: ' + error.message);
+    }
   };
-  if (!isRegistered) {
-    return <Register onRegister={handleRegister} />;
+
+  // --- Логін ---
+  const handleLogin = async (formData) => {
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        const errorText = await response.text();
+        alert('Помилка входу: ' + errorText);
+        return;
+      }
+      alert('Вхід успішний!');
+      setIsAuthenticated(true);
+      setMode(null);
+    } catch (error) {
+      alert('Помилка мережі: ' + error.message);
+    }
+  };
+
+  // --- UI залежно від аутентифікації ---
+  if (!isAuthenticated) {
+    if (!mode) {
+      return (
+        <div className="register-container">
+          <div className="register-form">
+            <h2>Вітаємо!</h2>
+            <button onClick={() => setMode('login')}>Увійти</button>
+            <button onClick={() => setMode('register')}>Зареєструватись</button>
+          </div>
+        </div>
+      );
+    } else if (mode === 'login') {
+      return (
+        <Login 
+          onLogin={handleLogin} 
+          switchToRegister={() => setMode('register')} 
+        />
+      );
+    } else if (mode === 'register') {
+      return (
+        <Register 
+          onRegister={handleRegister} 
+        />
+      );
+    }
   }
 
+  // --- Основний інтерфейс після входу ---
   return (
     <div className="todo-app">
       <div className="theme-toggle-container">

@@ -1,66 +1,68 @@
 import { useState } from 'react';
-import './Register.css'
+import './Register.css';
 
 function Register({ onRegister }) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    email: '',
+    birthDate: '',
+    username: '',
     password: '',
   });
 
-  const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  const handleChange = e => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    console.log('Реєстрація:', formData);
-    onRegister();
+    onRegister(formData);
   };
 
   return (
-    <div className="register-container">
-      <h2>Реєстрація</h2>
-      <form onSubmit={handleSubmit} className="register-form">
-        <input
-          type="text"
-          name="firstName"
-          placeholder="Ім’я"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Прізвище"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Пароль"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit" className="register-btn">Зареєструватись</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="register-form">
+      <input
+        name="firstName"
+        type="text"
+        placeholder="Ім'я"
+        value={formData.firstName}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="lastName"
+        type="text"
+        placeholder="Прізвище"
+        value={formData.lastName}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="birthDate"
+        type="date"
+        placeholder="Дата народження"
+        value={formData.birthDate}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="username"
+        type="text"
+        placeholder="Логін"
+        value={formData.username}
+        onChange={handleChange}
+        required
+      />
+      <input
+        name="password"
+        type="password"
+        placeholder="Пароль"
+        value={formData.password}
+        onChange={handleChange}
+        required
+      />
+      <button type="submit">Зареєструватись</button>
+    </form>
   );
 }
 

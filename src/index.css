@@ -66,3 +66,34 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.start-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #121212;
+  color: #fff;
+}
+
+.start-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 20px;
+}
+
+.start-buttons button {
+  padding: 12px 24px;
+  background-color: #0af;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.start-buttons button:hover {
+  background-color: #08c;
+}
